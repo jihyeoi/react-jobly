@@ -1,8 +1,10 @@
 import React, {useState, useEffect} from "react";
 
 import {v4 as uuid} from "uuid";
+import {Link} from "react-router-dom";
 import CompanyCard from "./CompanyCard";
 import JoblyApi from "./JoblyApi";
+import SearchForm from "./SearchForm";
 
 import "./CompaniesList.css";
 
@@ -19,7 +21,7 @@ import "./CompaniesList.css";
 function CompaniesList() {
   const [companies, setCompanies] = useState({
     data: null,
-    isLoading: true
+    isLoading: true,
   });
 
   useEffect(function fetchAllCompanies() {
@@ -29,29 +31,33 @@ function CompaniesList() {
 
       setCompanies({
         data: response,
-        isLoading: false
+        isLoading: false,
       });
     }
     fetchCompanies();
   }, []);
 
-  function searchCompanies(name) {
-    setCompanies(companies.filter((c) => c.name.includes(name)));
+  function searchCompanies(searchTerm) {
+    const handle = searchTerm.trim();
+    console.log("handle:", handle);
+    // setCompanies(companies.filter((c) => c.name.includes(name)));
   }
 
-  if (companies.isLoading) return <i>Loading...</i>
+  if (companies.isLoading) return <i>Loading...</i>;
 
   return (
     <div className="CompaniesList">
+      <SearchForm searchItem={searchCompanies} />
       <div className="CompaniesList-title">
         <h1>All Companies</h1>
       </div>
       <div className="CompaniesList-companies">
         {companies.data.map((c) => (
-          <CompanyCard key={uuid()} name={c.name} description={c.description} />
+          <Link to={`${c.handle}`} key={uuid()}>
+            <CompanyCard name={c.name} description={c.description} />
+          </Link>
         ))}
       </div>
-      {/* <SearchForm search={searchCompanies} /> */}
     </div>
   );
 }
