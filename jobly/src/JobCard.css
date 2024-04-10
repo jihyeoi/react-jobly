@@ -1,4 +1,4 @@
-.CompanyCard {
+.JobCard {
   width: 70%;
   height: auto;
   background-color: white;
@@ -12,10 +12,6 @@
   font-size: 15px;
 }
 
-.CompanyCard-name {
-  text-align: left;
-}
-
-.CompanyCard-description {
-  text-align: left;
+.JobCard-description > p {
+  margin: 0;
 }

@@ -1,0 +1,10 @@
+.JobsList {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.JobsList-title > h2 {
+  text-align: center;
+}
