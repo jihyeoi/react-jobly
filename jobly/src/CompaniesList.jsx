@@ -17,14 +17,20 @@ import "./CompaniesList.css";
  */
 
 function CompaniesList() {
-  const [companies, setCompanies] = useState([]);
+  const [companies, setCompanies] = useState({
+    data: null,
+    isLoading: true
+  });
 
   useEffect(function fetchAllCompanies() {
     async function fetchCompanies() {
       const response = await JoblyApi.getCompanies();
-      console.log("response inside fetch", response);
+      // console.log("response inside fetch", response);
 
-      setCompanies(response);
+      setCompanies({
+        data: response,
+        isLoading: false
+      });
     }
     fetchCompanies();
   }, []);
@@ -33,13 +39,15 @@ function CompaniesList() {
     setCompanies(companies.filter((c) => c.name.includes(name)));
   }
 
+  if (companies.isLoading) return <i>Loading...</i>
+
   return (
     <div className="CompaniesList">
       <div className="CompaniesList-title">
         <h1>All Companies</h1>
       </div>
       <div className="CompaniesList-companies">
-        {companies.map((c) => (
+        {companies.data.map((c) => (
           <CompanyCard key={uuid()} name={c.name} description={c.description} />
         ))}
       </div>
