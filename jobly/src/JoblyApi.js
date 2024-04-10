@@ -45,6 +45,7 @@ class JoblyApi {
     return await resp.json();
   }
 
+  // /companies?nameLike=${name}
   // Individual API routes
 
   /** Get details on a company by handle. */
@@ -58,6 +59,13 @@ class JoblyApi {
 
   static async getCompanies() {
     let res = await this.request("companies");
+    return res.companies;
+  }
+
+  /** Get list of partial companies */
+
+  static async getSearchedCompany(name) {
+    let res = await this.request("companies", `?nameLike=${name}`)
     return res.companies;
   }
 
