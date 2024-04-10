@@ -7,7 +7,7 @@ import React, {useState} from "react";
  * useEffect: none
  * props: none
  *
- * App --> RoutesList --> HomePage
+ * RoutesList --> HomePage
  */
 
 function HomePage() {

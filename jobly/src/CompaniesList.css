@@ -1,0 +1,26 @@
+body {
+  margin-top: 50px;
+}
+
+.CompaniesList {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.CompaniesList-title {
+  width: 100%;
+  height: auto;
+  padding-top: 20px;
+  text-align: center;
+}
+
+.CompaniesList-title > h1 {
+  color: black;
+}
+
+.CompaniesList-companies {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

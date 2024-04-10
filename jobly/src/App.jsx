@@ -1,14 +1,14 @@
 import "./App.css";
 import RoutesList from "./RouteList";
 import NavBar from "./NavBar";
-import { BrowserRouter } from "react-router-dom";
+import {BrowserRouter} from "react-router-dom";
 
 /** Component for entire page.
  *
  * Props: none
  * State: none
  *
- * //TODO: component tree
+ * App -> RouteList, NavBar
  */
 
 function App() {

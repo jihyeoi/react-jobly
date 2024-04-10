@@ -2,11 +2,11 @@
   min-height: 90vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  /* align-items: center;
+  justify-content: center; */
   font-size: calc(10px + 2vmin);
-  color: crimson;
-  text-align: center;
+  /* color: crimson;
+  text-align: center; */
 }
 
 .App-logo {

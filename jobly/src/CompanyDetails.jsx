@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from "react";
-import { useParams } from "react-router-dom";
+import {useParams} from "react-router-dom";
 import JoblyApi from "./JoblyApi";
-
 
 /**
  * renders detail page for company
@@ -10,11 +9,9 @@ import JoblyApi from "./JoblyApi";
  * useEffect: makes AJAX call
  * props: none
  *
- * App --> RoutesList --> CompanyDetails --> JobCardList --> JobCard
+ * RoutesList --> CompanyDetails --> JobCardList
  */
 
-function CompanyDetails() {
-
-}
+function CompanyDetails() {}
 
 export default CompanyDetails;
