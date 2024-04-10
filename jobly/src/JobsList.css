@@ -5,6 +5,14 @@
   align-items: center;
 }
 
+.JobsList-title {
+  width: 100%;
+}
+
 .JobsList-title > h2 {
   text-align: center;
+}
+
+.JobsList-jobs {
+  width: 100%;
 }

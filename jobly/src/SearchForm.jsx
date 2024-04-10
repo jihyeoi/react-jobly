@@ -2,12 +2,15 @@ import React, {useState} from "react";
 
 import "./SearchForm.css";
 
+const INITIAL_STATE = {
+  search: "",
+};
 /**
  *
  * @returns
  */
 function SearchForm({searchItem}) {
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState(INITIAL_STATE);
 
   function handleSubmit(evt) {
     evt.preventDefault();
@@ -15,10 +18,8 @@ function SearchForm({searchItem}) {
   }
 
   function handleChange(evt) {
-    evt.preventDefault();
     const {name, value} = evt.target;
-    setFormData((fData) => ({...fData, [name]: value.trim()}));
-    console.log("ev.target: ", evt.target.value.trim());
+    setFormData((fData) => ({...fData, [name]: value}));
   }
 
   return (
@@ -31,6 +32,7 @@ function SearchForm({searchItem}) {
             className="form-control"
             placeholder="Enter search term..."
             onChange={handleChange}
+            value={formData.search}
           />
           <button
             type="submit"

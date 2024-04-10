@@ -65,7 +65,7 @@ class JoblyApi {
   /** Get list of partial companies */
 
   static async getSearchedCompany(name) {
-    let res = await this.request("companies", `?nameLike=${name}`)
+    let res = await this.request("companies", `?nameLike=${name}`);
     return res.companies;
   }
 
@@ -73,6 +73,13 @@ class JoblyApi {
 
   static async getJobs() {
     let res = await this.request("jobs");
+    return res.jobs;
+  }
+
+  /** Get list of searched jobs */
+
+  static async getSearchedJob(name) {
+    let res = await this.request("jobs", `?title=${name}`);
     return res.jobs;
   }
 

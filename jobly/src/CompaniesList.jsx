@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 
-import { v4 as uuid } from "uuid";
-import { Link } from "react-router-dom";
+import {v4 as uuid} from "uuid";
+import {Link} from "react-router-dom";
 import CompanyCard from "./CompanyCard";
 import JoblyApi from "./JoblyApi";
 import SearchForm from "./SearchForm";
@@ -26,7 +26,7 @@ function CompaniesList() {
 
   const [searchedCompany, setSearchedCompany] = useState({
     search: null,
-    companies: []
+    companies: [],
   });
 
   useEffect(function fetchAllCompanies() {
@@ -52,7 +52,7 @@ function CompaniesList() {
 
     setSearchedCompany({
       search: searchTerm,
-      companies: response
+      companies: response,
     });
   }
 
@@ -71,14 +71,15 @@ function CompaniesList() {
             </Link>
           ))}
         </div>
-      </div>);
+      </div>
+    );
   }
 
   function renderSearch() {
     return (
       <div>
         <div className="CompaniesList-title">
-          <h1>Search Results For {searchedCompany.searchTerm}</h1>
+          <h1>Search Results For '{searchedCompany.searchTerm}'</h1>
         </div>
         <div className="CompaniesList-companies">
           {searchedCompany.companies.map((c) => (
@@ -96,8 +97,7 @@ function CompaniesList() {
       <SearchForm searchItem={searchCompanies} />
       {searchedCompany.companies.length === 0
         ? renderAllCompanies()
-        : renderSearch()
-      }
+        : renderSearch()}
     </div>
   );
 }
