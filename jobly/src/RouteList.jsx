@@ -21,6 +21,11 @@ function RoutesList() {
         <Route element={<CompaniesList />} path="/companies" />
         <Route element={<JobsList />} path="/jobs" />
         <Route element={<CompanyDetails />} path="/companies/:name" />
+
+        <Route element={<SingupForm />} path="/signup" />
+        <Route element={<LoginForm />} path="/login" />
+        <Route element={<ProfilePage />} path="/profile" />
+
         <Route element={<HomePage />} path="*" />
       </Routes>
     </div>
