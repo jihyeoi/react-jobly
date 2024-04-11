@@ -2,11 +2,28 @@ import React, {useState} from "react";
 
 import "./LoginForm.css";
 
-function LoginForm() {
+const INITIAL_STATE = {
+  username: "",
+  password: ""
+};
+
+function LoginForm({}) {
+  const [formData, setFormData] = useState(INITIAL_STATE);
+
+  function handleSubmit(evt) {
+    evt.preventDefault();
+    searchItem(formData.search);
+  }
+
+  function handleChange(evt) {
+    const {name, value} = evt.target;
+    setFormData((fData) => ({...fData, [name]: value}));
+  }
+
   return (
     <div className="LoginForm">
       <h3>Log In</h3>
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="username">Username</label>
           <input
@@ -14,6 +31,7 @@ function LoginForm() {
             className="form-control"
             id="username"
             name="username"
+            onChange={handleChange}
           />
         </div>
         <div className="form-group">
@@ -23,6 +41,7 @@ function LoginForm() {
             className="form-control"
             id="password"
             name="password"
+            onChange={handleChange}
           />
         </div>
         <button type="submit" className="btn btn-primary">
