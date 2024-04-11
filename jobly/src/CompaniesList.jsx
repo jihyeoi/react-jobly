@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 
-import { v4 as uuid } from "uuid";
-import { Link } from "react-router-dom";
+import {v4 as uuid} from "uuid";
+import {Link} from "react-router-dom";
 import CompanyCard from "./CompanyCard";
 import JoblyApi from "./JoblyApi";
 import SearchForm from "./SearchForm";
@@ -60,28 +60,40 @@ function CompaniesList() {
       data: response,
       isLoading: false,
     });
-
   }
 
-  if (companies.isLoading) return <i>Loading...</i>;
+  if (companies.isLoading)
+    return (
+      <div className="CompaniesList-message">
+        <i>Loading...</i>
+      </div>
+    );
 
   /** function to render all Companies to display on page */
   function renderAllCompanies() {
     return (
       <div>
         <div className="CompaniesList-title">
-          {!searchedCompany
-            ? <h1>All Companies</h1>
-            : <h1>Search Results For '{searchedCompany}'</h1>}
+          {!searchedCompany ? (
+            <h1>All Companies</h1>
+          ) : (
+            <h1>Search Results For '{searchedCompany}'</h1>
+          )}
         </div>
-        <div className="CompaniesList-companies">
-          {/* TODO: add logic to put "sorry no results found!" */}
-          {companies.data.map((c) => (
-            <Link to={`${c.handle}`} key={uuid()}>
-              <CompanyCard name={c.name} description={c.description} />
-            </Link>
-          ))}
-        </div>
+        {companies.data.length > 0 ? (
+          <div className="CompaniesList-companies">
+            {/* TODO: add logic to put "sorry no results found!" */}
+            {companies.data.map((c) => (
+              <Link to={`${c.handle}`} key={uuid()}>
+                <CompanyCard name={c.name} description={c.description} />
+              </Link>
+            ))}
+          </div>
+        ) : (
+          <div className="CompaniesList-message">
+            "Sorry, no results were found!"
+          </div>
+        )}
       </div>
     );
   }

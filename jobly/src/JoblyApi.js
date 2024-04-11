@@ -57,32 +57,33 @@ class JoblyApi {
 
   /** Get list of companies */
   //TODO: combine this and getSearchedCompany
-  static async getCompanies(name="") {
-    const data = name ? {nameLike: name} : ""
+  static async getCompanies(name = "") {
+    const data = name ? { nameLike: name } : "";
     let res = await this.request("companies", data);
     return res.companies;
   }
 
   /** Get list of searched companies by full name or partial name */
   // TODO: turn this into an object
-  static async getSearchedCompany(name) {
-    let res = await this.request("companies", `?nameLike=${name}`);
-    return res.companies;
-  }
+  // static async getSearchedCompany(name) {
+  //   let res = await this.request("companies", `?nameLike=${name}`);
+  //   return res.companies;
+  // }
 
   /** Get list of jobs */
 
-  static async getJobs() {
-    let res = await this.request("jobs");
+  static async getJobs(job = "") {
+    const data = job ? { title: job } : "";
+    const res = await this.request("jobs", data);
     return res.jobs;
   }
 
   /** Get list of searched jobs by full name or partial name */
 
-  static async getSearchedJob(name) {
-    let res = await this.request("jobs", `?title=${name}`);
-    return res.jobs;
-  }
+  // static async getSearchedJob(name) {
+  //   let res = await this.request("jobs", `?title=${name}`);
+  //   return res.jobs;
+  // }
 
   // obviously, you'll add a lot here ...
 }
