@@ -2,7 +2,10 @@ import HomePage from "./HomePage";
 import CompaniesList from "./CompaniesList";
 import {Route, Routes, Navigate} from "react-router-dom";
 import JobsList from "./JobsList";
-import CompanyDetails from "./CompanyDetails"
+import CompanyDetails from "./CompanyDetails";
+import SingupForm from "./SignupForm";
+import LoginForm from "./LoginForm";
+import ProfilePage from "./ProfilePage";
 
 /**
  * Routes list
@@ -13,7 +16,7 @@ import CompanyDetails from "./CompanyDetails"
  *
  * App -> RoutesList -> CompanyDeatail, JobList, CompanyList, Homepage
  */
-function RoutesList() {
+function RoutesList({register}) {
   return (
     <div>
       <Routes>
@@ -22,7 +25,7 @@ function RoutesList() {
         <Route element={<JobsList />} path="/jobs" />
         <Route element={<CompanyDetails />} path="/companies/:name" />
 
-        <Route element={<SingupForm />} path="/signup" />
+        <Route element={<SingupForm register={register} />} path="/signup" />
         <Route element={<LoginForm />} path="/login" />
         <Route element={<ProfilePage />} path="/profile" />
 
