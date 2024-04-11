@@ -18,7 +18,7 @@ import "./JobCardList.css";
  * JobList -> JobCardList -> JobCard
  */
 function JobCardList({jobs}) {
-  console.log("This is JobCardList jobs!", jobs);
+
   return (
     <div className="JobCardList">
       <div className="JobCardList-list">

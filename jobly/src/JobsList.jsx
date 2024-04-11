@@ -24,23 +24,30 @@ function JobsList() {
     jobs: [],
   });
 
-  console.log("searchedJobs: ", searchedJobs);
-
   useEffect(function fetchAllJobs() {
     async function fetchJobs() {
-      // console.log("This is the async function for fetching jobs!");
       const response = await JoblyApi.getJobs();
-      console.log("jobs inside fetch", response);
+      // console.log("jobs inside fetch", response);
 
-      setJobs({isLoading: false, jobs: response});
+      setJobs({
+        isLoading: false,
+        jobs: response
+      });
     }
     fetchJobs();
   }, []);
 
+  /** search through all jobs by partial or full job name */
   async function searchJobs(jobName) {
     const name = jobName.trim();
 
-    if (name === "") return jobs;
+    if (name === "") {
+      setSearchJobs({
+        searchTerm: null,
+        jobs: []
+      })
+      return jobs;
+    }
 
     const response = await JoblyApi.getSearchedJob(name);
 
@@ -52,6 +59,7 @@ function JobsList() {
 
   if (jobs.isLoading) return <i>Loading...</i>;
 
+  /** function to render searched Jobs to display on page */
   function renderSearchedJobs() {
     return (
       <div className="JobsList-jobs">
@@ -65,6 +73,7 @@ function JobsList() {
     );
   }
 
+  /** function to render all Jobs to display on page */
   function renderAllJobs() {
     return (
       <div className="JobsList-jobs">
@@ -81,7 +90,9 @@ function JobsList() {
   return (
     <div className="JobsList">
       <SearchForm searchItem={searchJobs} />
-      {searchedJobs.searchTerm ? renderSearchedJobs() : renderAllJobs()}
+      {!searchedJobs.searchTerm
+      ? renderAllJobs()
+      : renderSearchedJobs()}
     </div>
   );
 }

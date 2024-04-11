@@ -21,12 +21,18 @@ function CompanyDetails() {
     isLoading: true,
   });
 
+  const [errors, setErrors] = useState([]);
+
   const {name} = useParams();
 
   useEffect(function fetchCompanyByName() {
     async function fetchCompany() {
-      const response = await JoblyApi.getCompany(name);
-      // console.log("COMPANY DETAILS inside fetch", response);
+      let response;
+      try {
+        response = await JoblyApi.getCompany(name);
+      } catch(err) {
+        setErrors(err)
+      }
 
       setCompany({
         data: response,
@@ -36,6 +42,7 @@ function CompanyDetails() {
     fetchCompany();
   }, []);
 
+  if (errors.length > 0) return <h1>Page not found</h1>
   if (company.isLoading) return <i>Loading...</i>;
 
   return (

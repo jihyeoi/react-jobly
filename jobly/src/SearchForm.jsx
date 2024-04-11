@@ -5,9 +5,14 @@ import "./SearchForm.css";
 const INITIAL_STATE = {
   search: "",
 };
-/**
+
+/** Search Form for Jobs or Companies
  *
- * @returns
+ * state: formData
+ * props: a function, searchItem
+ *
+ * {JobsList, CompanyList} --> SearchForm
+ *
  */
 function SearchForm({searchItem}) {
   const [formData, setFormData] = useState(INITIAL_STATE);

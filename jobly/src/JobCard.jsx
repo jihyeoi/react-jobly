@@ -17,7 +17,6 @@ import "./JobCard.css";
  * JobCardList -> JobCard
  */
 function JobCard({title, salary, equity, companyHandle}) {
-  console.log("This is JobCard!");
 
   return (
     <div className="JobCard">
