@@ -16,7 +16,7 @@ import ProfilePage from "./ProfilePage";
  *
  * App -> RoutesList -> CompanyDeatail, JobList, CompanyList, Homepage
  */
-function RoutesList({register}) {
+function RoutesList({register, login}) {
   return (
     <div>
       <Routes>
@@ -26,7 +26,7 @@ function RoutesList({register}) {
         <Route element={<CompanyDetails />} path="/companies/:name" />
 
         <Route element={<SingupForm register={register} />} path="/signup" />
-        <Route element={<LoginForm />} path="/login" />
+        <Route element={<LoginForm login={login} />} path="/login" />
         <Route element={<ProfilePage />} path="/profile" />
 
         <Route element={<HomePage />} path="*" />

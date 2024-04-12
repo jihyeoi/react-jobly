@@ -62,26 +62,26 @@ class JoblyApi {
 
   /** return token when user registers */
 
-  static async register({username, password, firstName, lastName, email}) {
+  static async register({ username, password, firstName, lastName, email }) {
     const res = await this.request(
       "auth/register",
-      {username, password, firstName, lastName, email},
+      { username, password, firstName, lastName, email },
       "POST"
-      )
+    );
 
-    return res;
+    return res.token;
   }
 
   /** return token when user logs in */
 
-  static async login({username, password}) {
+  static async login({ username, password }) {
     const res = await this.request(
       "auth/token",
-      {username, password},
+      { username, password },
       "POST"
-      )
+    );
 
-    return res;
+    return res.token;
   }
 
   /** get user info by username */

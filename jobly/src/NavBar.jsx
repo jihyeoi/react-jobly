@@ -14,11 +14,14 @@ import "./NavBar.css";
  *
  * App -> Navbar
  */
-function NavBar() {
+function NavBar({logout}) {
   const {currentUser} = useContext(userContext);
 
-  console.log("currentUser from NavBar: ", currentUser);
+  function logout() {
+    logout();
+  }
 
+  //TODO: Use NavLinks rather than Links
   function renderLinks() {
     console.log("currentUser from renderLinks: ", currentUser);
     return (
@@ -26,7 +29,9 @@ function NavBar() {
         <Link to="/companies">Companies</Link>
         <Link to="/jobs">Jobs</Link>
         <Link to="/profile">Profile</Link>
-        <Link to="/logout">Log out</Link>
+        <Link onClick={logout} to="/">
+          Log out - {currentUser.username}
+        </Link>
       </div>
     );
   }

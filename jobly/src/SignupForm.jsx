@@ -14,12 +14,20 @@ const INITIAL_STATE = {
 };
 
 /**
+ * Signup form
  *
- * @param {*} param0
- * @returns
+ * Props:
+ * - register (function)
+ *
+ * State:
+ * - formData
+ * - errors
+ *
+ * RouteList -> SignupForm
  */
 function SignupForm({register}) {
   const [formData, setFormData] = useState(INITIAL_STATE);
+  const [errors, setErrors] = useState([]);
 
   const {currentUser} = useContext(userContext);
 
@@ -29,12 +37,17 @@ function SignupForm({register}) {
     // console.log("sig up form:", value);
   }
 
-  function handleSubmit(evt) {
+  //TODO: Insert useNavigate on try block
+  async function handleSubmit(evt) {
     evt.preventDefault();
-    register(formData);
-    setFormData(INITIAL_STATE);
+    try {
+      await register(formData);
+      setFormData(INITIAL_STATE);
+    } catch (error) {
+      setErrors(error);
+    }
   }
-
+  //TODO:
   if (Object.keys(currentUser).length !== 0) {
     return <Navigate to="/" />;
   }
@@ -42,6 +55,13 @@ function SignupForm({register}) {
   return (
     <div className="SignupForm">
       <h3>Sign Up</h3>
+      {errors.length > 0
+        ? errors.map((err) => (
+            <div className="alert alert-danger" role="alert" key={err}>
+              {err}
+            </div>
+          ))
+        : ""}
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="username">Username</label>

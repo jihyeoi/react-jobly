@@ -17,47 +17,62 @@ import "./App.css";
  */
 function App() {
   const [currentUser, setCurrentUser] = useState({});
-  const [token, setToken] = useState("")
+  const [token, setToken] = useState("");
 
   console.log("currentUser 1", currentUser);
 
+  //TODO: Change res name for token
   async function register({username, password, firstName, lastName, email}) {
-    let res;
-    try {
-      res = await JoblyApi.register({username, password, firstName, lastName, email})
-      setToken(res.token);
-    } catch(err) {
-      console.log(err);
-    }
-  }
-
-  async function login({username, password}) {
-    const res = await JoblyApi.login(currentUser)
+    const res = await JoblyApi.register({
+      username,
+      password,
+      firstName,
+      lastName,
+      email,
+    });
     setToken(res);
   }
 
-  useEffect(function getUserOnTokenChange() {
-    async function getUser() {
-      JoblyApi.token = token
+  async function login({username, password}) {
+    //console.log("username from App-login: ", username, password);
+    const res = await JoblyApi.login({username, password});
+    setToken(res);
+  }
 
-      const decodedToken = jwtDecode(token)
-      const username = decodedToken.username
+  function logout() {
+    setCurrentUser({});
+    setToken("");
+  }
 
-      // use token to get username --> user data
-      const user = await JoblyApi.getUser(username);
-      console.log(user, "USER FROM USE EFFECT")
-    }
-    getUser();
-  }, [token])
+  //TODO: FROM 52-> 59 put in try catch. If error, logout user
+  useEffect(
+    function getUserOnTokenChange() {
+      console.log("token from useEffect: ", token);
+      async function getUser() {
+        JoblyApi.token = token;
 
+        const decodedToken = jwtDecode(token);
+        const username = decodedToken.username;
 
+        // use token to get username --> user data
+        const user = await JoblyApi.getUser(username);
+        setCurrentUser(user);
+        console.log(user, "USER FROM USE EFFECT");
+      }
+      //TODO: Use if condition here instead
+      {
+        token !== "" ? getUser() : "";
+      }
+    },
+    [token]
+  );
 
   return (
     <userContext.Provider value={{currentUser}}>
       <div className="App">
         <BrowserRouter>
-          <NavBar />
-          <RoutesList register={register} login={login}/>
+          <NavBar logout={logout} />
+          <RoutesList register={register} login={login} />
         </BrowserRouter>
       </div>
     </userContext.Provider>
