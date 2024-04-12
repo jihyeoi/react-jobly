@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Navigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {useContext} from "react";
 import userContext from "./userContext";
 
@@ -30,6 +30,7 @@ function SignupForm({register}) {
   const [errors, setErrors] = useState([]);
 
   const {currentUser} = useContext(userContext);
+  const navigate = useNavigate();
 
   function handleChange(evt) {
     const {name, value} = evt.target;
@@ -37,19 +38,14 @@ function SignupForm({register}) {
     // console.log("sig up form:", value);
   }
 
-  //TODO: Insert useNavigate on try block
   async function handleSubmit(evt) {
     evt.preventDefault();
     try {
       await register(formData);
-      setFormData(INITIAL_STATE);
+      navigate("/");
     } catch (error) {
       setErrors(error);
     }
-  }
-  //TODO:
-  if (Object.keys(currentUser).length !== 0) {
-    return <Navigate to="/" />;
   }
 
   return (

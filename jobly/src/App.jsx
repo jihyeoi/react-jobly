@@ -1,10 +1,10 @@
-import {useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import RoutesList from "./RouteList";
 import NavBar from "./NavBar";
-import {BrowserRouter} from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import userContext from "./userContext";
 import JoblyApi from "./JoblyApi";
-import {jwtDecode} from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 
 import "./App.css";
 
@@ -16,64 +16,101 @@ import "./App.css";
  * App -> RouteList, NavBar
  */
 function App() {
-  const [currentUser, setCurrentUser] = useState({});
-  const [token, setToken] = useState("");
+  const [currentUser, setCurrentUser] = useState({
+    user: {},
+    isLoading: true,
+  });
+  const [token, setToken] = useState(localStorage.getItem("token") || "");
+  const [error, setError] = useState(null);
 
-  console.log("currentUser 1", currentUser);
-
-  //TODO: Change res name for token
-  async function register({username, password, firstName, lastName, email}) {
-    const res = await JoblyApi.register({
+  async function register({ username, password, firstName, lastName, email }) {
+    const token = await JoblyApi.register({
       username,
       password,
       firstName,
       lastName,
       email,
     });
-    setToken(res);
+    setToken(token);
+    localStorage.setItem("token", token);
   }
 
-  async function login({username, password}) {
+  async function login({ username, password }) {
     //console.log("username from App-login: ", username, password);
-    const res = await JoblyApi.login({username, password});
-    setToken(res);
+    const token = await JoblyApi.login({ username, password });
+    setToken(token);
+    localStorage.setItem("token", token);
   }
 
   function logout() {
+    localStorage.removeItem("token");
     setCurrentUser({});
     setToken("");
   }
 
-  //TODO: FROM 52-> 59 put in try catch. If error, logout user
   useEffect(
     function getUserOnTokenChange() {
       console.log("token from useEffect: ", token);
       async function getUser() {
-        JoblyApi.token = token;
+        try {
+          JoblyApi.token = token;
 
-        const decodedToken = jwtDecode(token);
-        const username = decodedToken.username;
+          const decodedToken = jwtDecode(token);
+          const username = decodedToken.username;
 
-        // use token to get username --> user data
-        const user = await JoblyApi.getUser(username);
-        setCurrentUser(user);
-        console.log(user, "USER FROM USE EFFECT");
+          // use token to get username --> user data
+          const user = await JoblyApi.getUser(username);
+          setCurrentUser((data) => ({
+            ...data,
+            user: user,
+            isLoading: false,
+          }));
+        } catch (err) {
+          setError(err);
+        }
       }
-      //TODO: Use if condition here instead
-      {
-        token !== "" ? getUser() : "";
+
+      if (token !== "") {
+        getUser();
+      } else {
+        setCurrentUser((data) => ({
+          ...data,
+          isLoading: false,
+        }));
       }
     },
     [token]
   );
 
+  /**
+   * useEffect
+   *  --> when page renders, checks if there is a user in local storage
+   *  --> if there is a user, then it stores it in the context
+   *  --> in every page, check first if there is a user
+   *  --> if there is, we return normally
+   *  --> if not, we can redirect / update state
+   */
+
+  console.log("CURRENT USER IN APP", currentUser);
+
+  // useEffect(function checkForToken() {
+  //   const tokenFromStorage = localStorage.getItem("token", token);
+  //   console.log("tokenFromStorage", tokenFromStorage);
+  //   if (tokenFromStorage) {
+  //     setToken(tokenFromStorage);
+  //   }
+  // }, []);
+
   return (
-    <userContext.Provider value={{currentUser}}>
+    <userContext.Provider value={{ currentUser }}>
       <div className="App">
-        <BrowserRouter>
-          <NavBar logout={logout} />
-          <RoutesList register={register} login={login} />
-        </BrowserRouter>
+        {currentUser.isLoading
+        ? <h2>Loading...</h2>
+        : <BrowserRouter>
+            <NavBar logout={logout} />
+            <RoutesList register={register} login={login} />
+          </BrowserRouter>
+        }
       </div>
     </userContext.Provider>
   );

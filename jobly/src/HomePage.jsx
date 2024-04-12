@@ -27,7 +27,7 @@ function HomePage() {
         <h2>
           Welcome{" "}
           <i>
-            {currentUser.firstName} {currentUser.lastName}!
+            {currentUser.user.firstName} {currentUser.user.lastName}!
           </i>
         </h2>
       )}

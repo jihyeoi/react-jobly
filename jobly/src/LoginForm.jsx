@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {useContext} from "react";
 import userContext from "./userContext";
-import {Navigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 import "./LoginForm.css";
 
@@ -24,33 +24,24 @@ const INITIAL_STATE = {
  */
 function LoginForm({login}) {
   const [formData, setFormData] = useState(INITIAL_STATE);
-
   const [errors, setErrors] = useState([]);
 
-  // console.log("errors: ", errors);
+  const {currentUser} = useContext(userContext);
+  const navigate = useNavigate();
 
-  //TODO: Take error out of []
   async function handleSubmit(evt) {
     evt.preventDefault();
     try {
       await login(formData);
-      setFormData(INITIAL_STATE);
+      navigate("/");
     } catch (error) {
-      setErrors([error]);
+      setErrors(error);
     }
   }
-
-  console.log("errors: ", errors);
-
-  const {currentUser} = useContext(userContext);
 
   function handleChange(evt) {
     const {name, value} = evt.target;
     setFormData((fData) => ({...fData, [name]: value}));
-  }
-
-  if (Object.keys(currentUser).length !== 0) {
-    return <Navigate to="/" />;
   }
 
   return (

@@ -1,5 +1,5 @@
 import React from "react";
-import {Link} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import {useContext} from "react";
 import userContext from "./userContext";
 import "./NavBar.css";
@@ -17,21 +17,20 @@ import "./NavBar.css";
 function NavBar({logout}) {
   const {currentUser} = useContext(userContext);
 
-  function logout() {
+  function logoutUser() {
     logout();
   }
 
-  //TODO: Use NavLinks rather than Links
   function renderLinks() {
     console.log("currentUser from renderLinks: ", currentUser);
     return (
       <div className="NavBar-routes">
-        <Link to="/companies">Companies</Link>
-        <Link to="/jobs">Jobs</Link>
-        <Link to="/profile">Profile</Link>
-        <Link onClick={logout} to="/">
+        <NavLink to="/companies">Companies</NavLink>
+        <NavLink to="/jobs">Jobs</NavLink>
+        <NavLink to="/profile">Profile</NavLink>
+        <NavLink onClick={logoutUser} to="/">
           Log out - {currentUser.username}
-        </Link>
+        </NavLink>
       </div>
     );
   }
@@ -39,13 +38,13 @@ function NavBar({logout}) {
   return (
     <div className="NavBar">
       <div className="NavBar-homepage">
-        <Link to="/">HomePage</Link>
+        <NavLink to="/">HomePage</NavLink>
       </div>
       <div className="NavBar-routes">
         {Object.keys(currentUser).length === 0 ? (
           <div className="NavBar-routes">
-            <Link to="/login">Login</Link>
-            <Link to="/signup">Sign Up</Link>
+            <NavLink to="/login">Login</NavLink>
+            <NavLink to="/signup">Sign Up</NavLink>
           </div>
         ) : (
           renderLinks()

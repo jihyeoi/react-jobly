@@ -5,6 +5,9 @@ import {Link} from "react-router-dom";
 import CompanyCard from "./CompanyCard";
 import JoblyApi from "./JoblyApi";
 import SearchForm from "./SearchForm";
+import {useContext} from "react";
+import userContext from "./userContext";
+import {Navigate} from "react-router-dom";
 
 import "./CompaniesList.css";
 
@@ -24,8 +27,16 @@ function CompaniesList() {
     isLoading: true,
   });
 
-  // TODO: just have (empty string) and update state for companies when we use this
   const [searchedCompany, setSearchedCompany] = useState("");
+  const {currentUser} = useContext(userContext);
+
+  console.log("CURRENT USER IN COMPANIES 32", currentUser)
+
+  if (currentUser.user.username === undefined) {
+    return <Navigate to="/" />
+  }
+
+  console.log("CURRENT USER IN COMPANIES", currentUser)
 
   useEffect(function fetchAllCompanies() {
     async function fetchCompanies() {
@@ -43,15 +54,6 @@ function CompaniesList() {
   /** search through all companies by partial or full company name */
   async function searchCompanies(searchTerm) {
     const handle = searchTerm.trim();
-
-    // if (handle === "") {
-    //   setSearchedCompany("");
-    //   setCompanies({
-    //     data: [],
-    //     isLoading: true,
-    //   })
-    //   return companies;
-    // }
 
     const response = await JoblyApi.getCompanies(handle);
 
@@ -82,7 +84,6 @@ function CompaniesList() {
         </div>
         {companies.data.length > 0 ? (
           <div className="CompaniesList-companies">
-            {/* TODO: add logic to put "sorry no results found!" */}
             {companies.data.map((c) => (
               <Link to={`${c.handle}`} key={uuid()}>
                 <CompanyCard name={c.name} description={c.description} />

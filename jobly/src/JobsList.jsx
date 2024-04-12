@@ -2,6 +2,9 @@ import React, {useState, useEffect} from "react";
 import JoblyApi from "./JoblyApi";
 import JobCardList from "./JobCardList";
 import SearchForm from "./SearchForm";
+import {useContext} from "react";
+import userContext from "./userContext";
+import {Navigate} from "react-router-dom";
 
 import "./JobsList.css";
 
@@ -20,6 +23,11 @@ function JobsList() {
     jobs: [],
   });
   const [searchedJob, setSearchJob] = useState("");
+  const {currentUser} = useContext(userContext);
+
+  if (currentUser.username === undefined && currentUser.isLoading === true) {
+    return <Navigate to="/" />
+  }
 
   useEffect(function fetchAllJobs() {
     async function fetchJobs() {
