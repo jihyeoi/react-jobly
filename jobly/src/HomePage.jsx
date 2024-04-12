@@ -16,8 +16,6 @@ import "./HomePage.css";
 
 function HomePage() {
   const {currentUser} = useContext(userContext);
-  //console.log("First Name from Homepage: ", firstName);
-  console.log("useContext: ", useContext(userContext));
   return (
     <div className="HomePage">
       <h1>Jobly</h1>

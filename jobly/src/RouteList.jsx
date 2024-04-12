@@ -18,7 +18,7 @@ import userContext from "./userContext";
  *
  * App -> RoutesList -> CompanyDeatail, JobList, CompanyList, Homepage
  */
-function RoutesList({register, login}) {
+function RoutesList({register, login, update}) {
   const {currentUser} = useContext(userContext);
 
   function renderForLoggedUsers() {
@@ -27,7 +27,7 @@ function RoutesList({register, login}) {
         <Route element={<CompaniesList />} path="/companies" />
         <Route element={<JobsList />} path="/jobs" />
         <Route element={<CompanyDetails />} path="/companies/:name" />
-        <Route element={<ProfileForm />} path="/profile" />
+        <Route element={<ProfileForm update={update}/>} path="/profile" />
       </>
     );
   }
@@ -40,7 +40,7 @@ function RoutesList({register, login}) {
       </>
     );
   }
-  //TODO: On line 49, change username conditional === null
+
   return (
     <div>
       <Routes>
@@ -48,7 +48,8 @@ function RoutesList({register, login}) {
 
         {!currentUser.user ? renderForNonLoggedUsers() : renderForLoggedUsers()}
 
-        <Route element={<HomePage />} path="*" />
+        {/* if use is trying to go somewhere they shouldn't be */}
+        <Route element={<Navigate to="/" />} path="*" />
       </Routes>
     </div>
   );

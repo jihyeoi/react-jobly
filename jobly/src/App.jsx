@@ -16,8 +16,7 @@ import "./App.css";
  * App -> RouteList, NavBar
  */
 function App() {
-  //TODO: Initialize currentUser.user to null instead of {} -> check if its's
-  //falsy in Navbar
+
   const [currentUser, setCurrentUser] = useState({
     user: null,
     isLoading: true,
@@ -25,17 +24,8 @@ function App() {
   const [token, setToken] = useState(localStorage.getItem("token") || "");
   const [error, setError] = useState(null);
 
-  /**
-   * useEffect
-   *  --> when page renders, checks if there is a user in local storage
-   *  --> if there is a user, then it stores it in the context
-   *  --> in every page, check first if there is a user
-   *  --> if there is, we return normally
-   *  --> if not, we can redirect / update state
-   */
   useEffect(
     function getUserOnTokenChange() {
-      console.log("token from useEffect: ", token);
       async function getUser() {
         try {
           JoblyApi.token = token;
@@ -54,14 +44,16 @@ function App() {
           setError(err);
         }
       }
-      //TODO: Add localStorage.remove and additem here
+
       if (token !== "") {
         getUser();
+        localStorage.setItem("token", token)
       } else {
-        setCurrentUser((data) => ({
-          ...data,
+        setCurrentUser({
+          user: null,
           isLoading: false,
-        }));
+        });
+        localStorage.removeItem("token")
       }
     },
     [token]
@@ -76,33 +68,39 @@ function App() {
       email,
     });
     setToken(token);
-    localStorage.setItem("token", token);
   }
 
   async function login({username, password}) {
-    //console.log("username from App-login: ", username, password);
     const token = await JoblyApi.login({username, password});
     setToken(token);
-    localStorage.setItem("token", token);
+  }
+
+  async function update({username, firstName, lastName, email}) {
+    const user = await JoblyApi.updateUser({
+      username,
+      firstName,
+      lastName,
+      email
+    })
+    setCurrentUser(data => ({
+      ...data,
+      user: user,
+    }));
   }
 
   function logout() {
-    localStorage.removeItem("token");
-    setCurrentUser({user: {}, isLoading: true});
+    setCurrentUser({user: null, isLoading: true});
     setToken("");
   }
-
-  console.log("CURRENT USER IN APP", currentUser);
 
   return (
     <userContext.Provider value={{currentUser}}>
       <div className="App">
-        {currentUser.isLoading ? (
-          <h2>Loading...</h2>
-        ) : (
-          <BrowserRouter>
+        {currentUser.isLoading
+        ? (<h2>Loading...</h2>)
+        : (<BrowserRouter>
             <NavBar logout={logout} />
-            <RoutesList register={register} login={login} />
+            <RoutesList register={register} login={login} update={update} />
           </BrowserRouter>
         )}
       </div>

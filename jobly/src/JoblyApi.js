@@ -35,12 +35,9 @@ class JoblyApi {
     const resp = await fetch(url, { method, body, headers });
 
     if (!resp.ok) {
-      console.error("API Error:", resp.statusText, resp.status);
       const message = (await resp.json()).error.message;
       throw Array.isArray(message) ? message : [message];
     }
-
-    console.log("url from request: ", url);
 
     return await resp.json();
   }
@@ -98,6 +95,18 @@ class JoblyApi {
     let res = await this.request(`users/${username}`);
     return res.user;
   }
+
+  /** patch user by either firstName, lastName, email */
+
+  static async updateUser({username, firstName, lastName, email}) {
+    let res = await this.request(
+      `users/${username}`,
+      { firstName, lastName, email },
+      "PATCH"
+    )
+    return res.user;
+  }
+
 
 }
 

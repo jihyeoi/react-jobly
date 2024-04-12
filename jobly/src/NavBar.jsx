@@ -33,7 +33,7 @@ function NavBar({logout}) {
       </div>
     );
   }
-  //TODO: Chnage username conditional
+
   return (
     <div className="NavBar">
       <div className="NavBar-homepage">

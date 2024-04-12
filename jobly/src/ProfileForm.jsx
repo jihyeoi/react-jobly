@@ -30,12 +30,9 @@ function ProfileForm({update}) {
 
   const navigate = useNavigate();
 
-  console.log("username from ProfileForm: ", currentUser);
-
   function handleChange(evt) {
     const {name, value} = evt.target;
     setFormData((prevData) => ({...prevData, [name]: value}));
-    //console.log("sig up form:", value);
   }
 
   async function handleSubmit(evt) {
@@ -49,7 +46,7 @@ function ProfileForm({update}) {
   }
   return (
     <div className="ProfileForm">
-      <h3>Sign Up</h3>
+      <h3>Edit Profile</h3>
       {errors.length > 0
         ? errors.map((err) => (
             <div className="alert alert-danger" role="alert" key={err}>
