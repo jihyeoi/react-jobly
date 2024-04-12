@@ -25,14 +25,9 @@ function JobsList() {
   const [searchedJob, setSearchJob] = useState("");
   const {currentUser} = useContext(userContext);
 
-  if (currentUser.username === undefined && currentUser.isLoading === true) {
-    return <Navigate to="/" />
-  }
-
   useEffect(function fetchAllJobs() {
     async function fetchJobs() {
       const response = await JoblyApi.getJobs();
-      // console.log("jobs inside fetch", response);
 
       setJobs({
         isLoading: false,
@@ -45,14 +40,6 @@ function JobsList() {
   /** search through all jobs by partial or full job name */
   async function searchJobs(jobName) {
     const name = jobName.trim();
-
-    // if (name === "") {
-    //   setSearchJobs({
-    //     searchTerm: null,
-    //     jobs: [],
-    //   });
-    //   return jobs;
-    // }
 
     const response = await JoblyApi.getJobs(name);
 
@@ -95,25 +82,10 @@ function JobsList() {
     );
   }
 
-  /** function to render searched Jobs to display on page */
-  // function renderSearchedJobs() {
-  //   return (
-  //     <div className="JobsList-jobs">
-  //       <div className="JobsList-title">
-  //         <h2>Search Results for '{searchedJobs.searchTerm}'</h2>
-  //       </div>
-  //       <div className="JobsList-jobs">
-  //         <JobCardList jobs={searchedJobs.jobs} />
-  //       </div>
-  //     </div>
-  //   );
-  // }
-
   return (
     <div className="JobsList">
       <SearchForm searchItem={searchJobs} />
       {renderAllJobs()}
-      {/* {!searchedJobs.searchTerm ? renderAllJobs() : renderSearchedJobs()} */}
     </div>
   );
 }

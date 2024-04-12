@@ -43,7 +43,7 @@ function LoginForm({login}) {
     const {name, value} = evt.target;
     setFormData((fData) => ({...fData, [name]: value}));
   }
-
+  // TODO: Use alert component
   return (
     <div className="LoginForm">
       <h3>Log In</h3>

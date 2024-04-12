@@ -30,8 +30,8 @@ function CompanyDetails() {
       let response;
       try {
         response = await JoblyApi.getCompany(name);
-      } catch(err) {
-        setErrors(err)
+      } catch (err) {
+        setErrors(err);
       }
 
       setCompany({
@@ -42,7 +42,7 @@ function CompanyDetails() {
     fetchCompany();
   }, []);
 
-  if (errors.length > 0) return <h1>Page not found</h1>
+  if (errors.length > 0) return <h1>Page not found</h1>;
   if (company.isLoading) return <i>Loading...</i>;
 
   return (

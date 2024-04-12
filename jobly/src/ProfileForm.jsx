@@ -3,21 +3,13 @@ import {useNavigate} from "react-router-dom";
 import {useContext} from "react";
 import userContext from "./userContext";
 
-import "./SignUpForm.css";
-
-const INITIAL_STATE = {
-  username: "",
-  password: "",
-  firstName: "",
-  lastName: "",
-  email: "",
-};
+import "./ProfileForm.css";
 
 /**
- * Signup form
+ * Profile form
  *
  * Props:
- * - register (function)
+ * - update (function)
  *
  * State:
  * - formData
@@ -25,31 +17,38 @@ const INITIAL_STATE = {
  *
  * RouteList -> SignupForm
  */
-function SignupForm({register}) {
+function ProfileForm({update}) {
+  const {currentUser} = useContext(userContext);
+  const INITIAL_STATE = {
+    username: currentUser.user.username,
+    firstName: currentUser.user.firstName,
+    lastName: currentUser.user.lastName,
+    email: currentUser.user.email,
+  };
   const [formData, setFormData] = useState(INITIAL_STATE);
   const [errors, setErrors] = useState([]);
 
-  const {currentUser} = useContext(userContext);
   const navigate = useNavigate();
+
+  console.log("username from ProfileForm: ", currentUser);
 
   function handleChange(evt) {
     const {name, value} = evt.target;
     setFormData((prevData) => ({...prevData, [name]: value}));
-    // console.log("sig up form:", value);
+    //console.log("sig up form:", value);
   }
 
   async function handleSubmit(evt) {
     evt.preventDefault();
     try {
-      await register(formData);
+      await update(formData);
       navigate("/");
     } catch (error) {
       setErrors(error);
     }
   }
-  //TODO: Move errors.map div to an alert component -> (messages([]), type)
   return (
-    <div className="SignupForm">
+    <div className="ProfileForm">
       <h3>Sign Up</h3>
       {errors.length > 0
         ? errors.map((err) => (
@@ -67,16 +66,8 @@ function SignupForm({register}) {
             id="username"
             name="username"
             onChange={handleChange}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            className="form-control"
-            id="password"
-            name="password"
-            onChange={handleChange}
+            value={formData.username}
+            disabled
           />
         </div>
         <div className="form-group">
@@ -87,6 +78,7 @@ function SignupForm({register}) {
             id="firstName"
             name="firstName"
             onChange={handleChange}
+            value={formData.firstName}
           />
         </div>
         <div className="form-group">
@@ -97,6 +89,7 @@ function SignupForm({register}) {
             id="lastName"
             name="lastName"
             onChange={handleChange}
+            value={formData.lastName}
           />
         </div>
         <div className="form-group">
@@ -107,14 +100,15 @@ function SignupForm({register}) {
             id="email"
             name="email"
             onChange={handleChange}
+            value={formData.email}
           />
         </div>
         <button type="submit" className="btn btn-primary">
-          Submit
+          Save Changes
         </button>
       </form>
     </div>
   );
 }
 
-export default SignupForm;
+export default ProfileForm;

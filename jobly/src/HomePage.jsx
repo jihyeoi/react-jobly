@@ -21,7 +21,7 @@ function HomePage() {
   return (
     <div className="HomePage">
       <h1>Jobly</h1>
-      {Object.keys(currentUser).length === 0 ? (
+      {!currentUser.user ? (
         "All the jobs in one, convenient place."
       ) : (
         <h2>

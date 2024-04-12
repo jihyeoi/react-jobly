@@ -22,26 +22,25 @@ function NavBar({logout}) {
   }
 
   function renderLinks() {
-    console.log("currentUser from renderLinks: ", currentUser);
     return (
       <div className="NavBar-routes">
         <NavLink to="/companies">Companies</NavLink>
         <NavLink to="/jobs">Jobs</NavLink>
         <NavLink to="/profile">Profile</NavLink>
         <NavLink onClick={logoutUser} to="/">
-          Log out - {currentUser.username}
+          Log out - {currentUser.user.username}
         </NavLink>
       </div>
     );
   }
-
+  //TODO: Chnage username conditional
   return (
     <div className="NavBar">
       <div className="NavBar-homepage">
         <NavLink to="/">HomePage</NavLink>
       </div>
       <div className="NavBar-routes">
-        {Object.keys(currentUser).length === 0 ? (
+        {!currentUser.user ? (
           <div className="NavBar-routes">
             <NavLink to="/login">Login</NavLink>
             <NavLink to="/signup">Sign Up</NavLink>

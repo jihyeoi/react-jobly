@@ -40,6 +40,8 @@ class JoblyApi {
       throw Array.isArray(message) ? message : [message];
     }
 
+    console.log("url from request: ", url);
+
     return await resp.json();
   }
 
@@ -50,6 +52,12 @@ class JoblyApi {
     const data = name ? { nameLike: name } : "";
     let res = await this.request("companies", data);
     return res.companies;
+  }
+
+  /** Get a company by handle */
+  static async getCompany(handle) {
+    let res = await this.request(`companies/${handle}`);
+    return res.company;
   }
 
   /** Get list of jobs */

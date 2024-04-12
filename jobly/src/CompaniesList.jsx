@@ -28,20 +28,11 @@ function CompaniesList() {
   });
 
   const [searchedCompany, setSearchedCompany] = useState("");
-  const {currentUser} = useContext(userContext);
-
-  console.log("CURRENT USER IN COMPANIES 32", currentUser)
-
-  if (currentUser.user.username === undefined) {
-    return <Navigate to="/" />
-  }
-
-  console.log("CURRENT USER IN COMPANIES", currentUser)
+  // const {currentUser} = useContext(userContext);
 
   useEffect(function fetchAllCompanies() {
     async function fetchCompanies() {
       const response = await JoblyApi.getCompanies();
-      // console.log("response inside fetch", response);
 
       setCompanies({
         data: response,
@@ -98,24 +89,6 @@ function CompaniesList() {
       </div>
     );
   }
-
-  // /** function to render searched Companies to display on page */
-  // function renderSearch() {
-  //   return (
-  //     <div>
-  //       <div className="CompaniesList-title">
-  //         <h1>Search Results For '{searchedCompany}'</h1>
-  //       </div>
-  //       <div className="CompaniesList-companies">
-  //         {companies.data.map((c) => (
-  //           <Link to={`${c.handle}`} key={uuid()}>
-  //             <CompanyCard name={c.name} description={c.description} />
-  //           </Link>
-  //         ))}
-  //       </div>
-  //     </div>
-  //   );
-  // }
 
   return (
     <div className="CompaniesList">

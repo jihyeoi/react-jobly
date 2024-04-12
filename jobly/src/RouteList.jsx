@@ -5,7 +5,9 @@ import JobsList from "./JobsList";
 import CompanyDetails from "./CompanyDetails";
 import SingupForm from "./SignupForm";
 import LoginForm from "./LoginForm";
-import ProfilePage from "./ProfilePage";
+import ProfileForm from "./ProfileForm";
+import {useContext} from "react";
+import userContext from "./userContext";
 
 /**
  * Routes list
@@ -17,17 +19,34 @@ import ProfilePage from "./ProfilePage";
  * App -> RoutesList -> CompanyDeatail, JobList, CompanyList, Homepage
  */
 function RoutesList({register, login}) {
+  const {currentUser} = useContext(userContext);
+
+  function renderForLoggedUsers() {
+    return (
+      <>
+        <Route element={<CompaniesList />} path="/companies" />
+        <Route element={<JobsList />} path="/jobs" />
+        <Route element={<CompanyDetails />} path="/companies/:name" />
+        <Route element={<ProfileForm />} path="/profile" />
+      </>
+    );
+  }
+
+  function renderForNonLoggedUsers() {
+    return (
+      <>
+        <Route element={<SingupForm register={register} />} path="/signup" />
+        <Route element={<LoginForm login={login} />} path="/login" />
+      </>
+    );
+  }
+  //TODO: On line 49, change username conditional === null
   return (
     <div>
       <Routes>
         <Route element={<HomePage />} path="/" />
-        <Route element={<CompaniesList />} path="/companies" />
-        <Route element={<JobsList />} path="/jobs" />
-        <Route element={<CompanyDetails />} path="/companies/:name" />
 
-        <Route element={<SingupForm register={register} />} path="/signup" />
-        <Route element={<LoginForm login={login} />} path="/login" />
-        <Route element={<ProfilePage />} path="/profile" />
+        {!currentUser.user ? renderForNonLoggedUsers() : renderForLoggedUsers()}
 
         <Route element={<HomePage />} path="*" />
       </Routes>
