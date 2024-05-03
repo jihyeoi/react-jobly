@@ -4,7 +4,8 @@ import JobCardList from "./JobCardList";
 import SearchForm from "./SearchForm";
 import {useContext} from "react";
 import userContext from "./userContext";
-import {Navigate} from "react-router-dom";
+import usePagination from "./usePagination";
+import usePagination from "./usePagination";
 
 import "./JobsList.css";
 
