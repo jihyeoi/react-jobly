@@ -5,7 +5,7 @@ import SearchForm from "./SearchForm";
 import {useContext} from "react";
 import userContext from "./userContext";
 import usePagination from "./usePagination";
-import usePagination from "./usePagination";
+import PaginationControls from "./PaginationControl";
 
 import "./JobsList.css";
 
@@ -24,7 +24,7 @@ function JobsList() {
     jobs: [],
   });
   const [searchedJob, setSearchJob] = useState("");
-  const {currentUser} = useContext(userContext);
+  const {currentData, next, prev, currentPage, maxPage} = usePagination(jobs, 20)
 
   useEffect(function fetchAllJobs() {
     async function fetchJobs() {
@@ -64,21 +64,20 @@ function JobsList() {
     return (
       <div className="JobsList-jobs">
         <div className="JobsList-title">
-          {!searchedJob ? (
-            <h2>All Jobs</h2>
-          ) : (
-            <h2>Search Results for '{searchedJob}'</h2>
-          )}
+        {!searchedJob
+          ? <h2>All Jobs</h2>
+          : <h2>Search Results for '{searchedJob}'</h2>
+          }
         </div>
-        {jobs.jobs.length > 0 ? (
-          <div className="JobsList-jobs">
-            <JobCardList jobs={jobs.jobs} />
-          </div>
-        ) : (
-          <div className="JobsList-message">
-            "Sorry, no results were found!"
-          </div>
-        )}
+        {jobs.jobs.length > 0
+          ? <div className="JobsList-jobs">
+              <JobCardList jobs={jobs.jobs} />
+              <PaginationControls next={next} prev={prev} currentPage={currentPage} maxPage={maxPage} />
+            </div>
+          : <div className="JobsList-message">
+              "Sorry, no results were found!"
+            </div>
+          }
       </div>
     );
   }

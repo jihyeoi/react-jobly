@@ -6,6 +6,8 @@ function usePagination(data, itemsPerPage) {
   const maxPage = Math.ceil(data.length / itemsPerPage);
 
   const currentData = useMemo(() => {
+    if (!Array.isArray(data)) return [];
+
     const start = (currentPage - 1) * itemsPerPage;
     const end = start + itemsPerPage;
     return data.slice(start, end);
