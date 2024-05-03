@@ -24,9 +24,8 @@ function NavBar({logout}) {
   function renderLinks() {
     return (
       <div className="NavBar-routes">
-        <NavLink to="/companies">Companies</NavLink>
-        <NavLink to="/jobs">Jobs</NavLink>
-        <NavLink to="/profile">Profile</NavLink>
+        <NavLink to="/companies" className={({ isActive }) => isActive ? 'active-link' : undefined}>Companies</NavLink>
+        <NavLink to="/jobs" className={({ isActive }) => isActive ? 'active-link' : undefined}>Jobs</NavLink>
         <NavLink onClick={logoutUser} to="/">
           Log out - {currentUser.user.username}
         </NavLink>
@@ -37,13 +36,13 @@ function NavBar({logout}) {
   return (
     <div className="NavBar">
       <div className="NavBar-homepage">
-        <NavLink to="/">HomePage</NavLink>
+        <NavLink to="/" className={({ isActive }) => isActive ? 'active-link' : undefined}>HomePage</NavLink>
       </div>
       <div className="NavBar-routes">
         {!currentUser.user ? (
           <div className="NavBar-routes">
-            <NavLink to="/login">Login</NavLink>
-            <NavLink to="/signup">Sign Up</NavLink>
+            <NavLink to="/login" className={({ isActive }) => isActive ? 'active-link' : undefined}>Login</NavLink>
+            <NavLink to="/signup" className={({ isActive }) => isActive ? 'active-link' : undefined}>Sign Up</NavLink>
           </div>
         ) : (
           renderLinks()
