@@ -100,7 +100,7 @@ function ProfileForm({update}) {
             value={formData.email}
           />
         </div>
-        <button type="submit" className="btn btn-primary">
+        <button type="submit" className="ProfileForm-button">
           Save Changes
         </button>
       </form>

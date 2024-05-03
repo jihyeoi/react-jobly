@@ -26,7 +26,11 @@ function usePagination(data, itemsPerPage) {
     setCurrentPage(Math.min(pageNumber, maxPage));
   }
 
-  return { next, prev, jump, currentData, currentPage, maxPage };
+  function reset() {
+    setCurrentPage(1)
+  }
+
+  return { next, prev, jump, reset, currentData, currentPage, maxPage };
 }
 
 export default usePagination;

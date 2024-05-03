@@ -5,9 +5,8 @@ import {Link} from "react-router-dom";
 import CompanyCard from "./CompanyCard";
 import JoblyApi from "./JoblyApi";
 import SearchForm from "./SearchForm";
-import {useContext} from "react";
-import userContext from "./userContext";
-import {Navigate} from "react-router-dom";
+import usePagination from "./usePagination";
+import PaginationControls from "./PaginationControl";
 
 import "./CompaniesList.css";
 
@@ -28,7 +27,7 @@ function CompaniesList() {
   });
 
   const [searchedCompany, setSearchedCompany] = useState("");
-  // const {currentUser} = useContext(userContext);
+  const {currentData, next, prev, reset, currentPage, maxPage} = usePagination(companies.data, 20)
 
   useEffect(function fetchAllCompanies() {
     async function fetchCompanies() {
@@ -41,6 +40,10 @@ function CompaniesList() {
     }
     fetchCompanies();
   }, []);
+
+  useEffect(() => {
+    reset();
+  }, [companies])
 
   /** search through all companies by partial or full company name */
   async function searchCompanies(searchTerm) {
@@ -67,25 +70,24 @@ function CompaniesList() {
     return (
       <div>
         <div className="CompaniesList-title">
-          {!searchedCompany ? (
-            <h1>All Companies</h1>
-          ) : (
-            <h1>Search Results For '{searchedCompany}'</h1>
-          )}
+          {!searchedCompany
+          ? <h1>All Companies</h1>
+          : <h1>Search Results For '{searchedCompany}'</h1>
+          }
         </div>
-        {companies.data.length > 0 ? (
-          <div className="CompaniesList-companies">
+        {companies.data.length > 0
+        ? <div className="CompaniesList-companies">
             {companies.data.map((c) => (
               <Link to={`${c.handle}`} key={uuid()}>
                 <CompanyCard name={c.name} description={c.description} />
               </Link>
             ))}
+            <PaginationControls next={next} prev={prev} currentPage={currentPage} maxPage={maxPage} />
           </div>
-        ) : (
-          <div className="CompaniesList-message">
+        : <div className="CompaniesList-message">
             "Sorry, no results were found!"
           </div>
-        )}
+        }
       </div>
     );
   }

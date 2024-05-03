@@ -26,6 +26,7 @@ function NavBar({logout}) {
       <div className="NavBar-routes">
         <NavLink to="/companies" className={({ isActive }) => isActive ? 'active-link' : undefined}>Companies</NavLink>
         <NavLink to="/jobs" className={({ isActive }) => isActive ? 'active-link' : undefined}>Jobs</NavLink>
+        <NavLink to="/profile" className={({ isActive }) => isActive ? 'active-link' : undefined}>Profile</NavLink>
         <NavLink onClick={logoutUser} to="/">
           Log out - {currentUser.user.username}
         </NavLink>
