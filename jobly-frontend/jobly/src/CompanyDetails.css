@@ -1,0 +1,14 @@
+.CompanyDetails {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.CompanyDetails-title {
+  padding: 10px 25px;
+  width: 75%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-size: 18px;
+}

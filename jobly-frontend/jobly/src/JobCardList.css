@@ -1,0 +1,10 @@
+.JobCardList {
+  width: 100%;
+}
+
+.JobCardList-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

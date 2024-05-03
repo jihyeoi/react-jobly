@@ -1,0 +1,15 @@
+.LoginForm {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.LoginForm > form {
+  width: 60%;
+  border: 1px solid rgb(213, 210, 210);
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 15px;
+}

@@ -1,0 +1,32 @@
+.NavBar {
+  width: 100%;
+  position: absolute;
+  top: 0px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background-color: cornflowerblue;
+}
+
+.NavBar-routes > a {
+  padding: 0 15px;
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.NavBar-homepage > a {
+  padding: 15px 0;
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.active-link {
+  font-weight: bold;
+}
+
+a {
+  text-decoration: none;
+}
