@@ -10,8 +10,27 @@
   display: flex;
   flex-direction: column;
   font-size: 15px;
+  position: relative;
 }
 
 .JobCard-description > p {
   margin: 0;
+}
+
+.JobCard-button {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background-color: #5cacee;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.JobCard-button:hover {
+  background-color: #3a8edc;
 }

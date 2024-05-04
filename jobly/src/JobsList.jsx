@@ -22,6 +22,7 @@ function JobsList() {
     jobs: [],
   });
   const [searchedJob, setSearchJob] = useState("");
+  const [error, setError] = useState(null);
   const {currentData, next, prev, reset, currentPage, maxPage} = usePagination(jobs.jobs, 20)
 
   useEffect(function fetchAllJobs() {
@@ -54,6 +55,21 @@ function JobsList() {
     });
   }
 
+  /** apply to job */
+  async function applyToJob({username, jobId}) {
+    try {
+      const response = await JoblyApi.applyToJob({
+        username,
+        jobId
+      });
+      if (response.ok) {
+        setJobs(jobs.jobs.map(job => job.id === jobId ? {...job, applied:true}: job))
+      }
+    } catch (err) {
+      setError(err)
+    }
+  }
+
   if (jobs.isLoading)
     return (
       <div className="JobsList-message">
@@ -73,7 +89,7 @@ function JobsList() {
         </div>
         {jobs.jobs.length > 0
           ? <div className="JobsList-jobs">
-              <JobCardList jobs={currentData} />
+              <JobCardList jobs={currentData} applyToJob={applyToJob}/>
               <PaginationControls next={next} prev={prev} currentPage={currentPage} maxPage={maxPage} />
             </div>
           : <div className="JobsList-message">

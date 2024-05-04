@@ -16,10 +16,13 @@ import "./JobCard.css";
  *
  * JobCardList -> JobCard
  */
-function JobCard({title, salary, equity, companyHandle}) {
+function JobCard({title, salary, equity, companyHandle, applyToJob, showApplyButton}) {
 
   return (
     <div className="JobCard">
+        {showApplyButton &&
+        <button className="JobCard-button" onClick={applyToJob}>Apply</button>}
+
       <div className="JobCard-title">
         <h6>{title}</h6>
         <p>{companyHandle}</p>
