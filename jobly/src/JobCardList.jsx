@@ -19,23 +19,31 @@ import "./JobCardList.css";
  *
  * JobList -> JobCardList -> JobCard
  */
-function JobCardList({jobs, applyToJob}) {
+function JobCardList({jobs, applyToJob, appliedJobs}) {
 
   const {currentUser} = useContext(userContext);
 
+  function handleApply(jobId) {
+    if (currentUser && currentUser.user) {
+      applyToJob(currentUser.user.username, jobId)
+    } else {
+      console.error("No current user available");
+    }
+  }
 
   return (
     <div className="JobCardList">
       <div className="JobCardList-list">
         {jobs.map((job) => (
           <JobCard
-            key={uuid()}
+            key={job.id}
+            id={job.id}
             title={job.title}
             salary={job.salary}
             equity={job.equity}
             companyHandle={job.companyHandle}
-            applyToJob={() => applyToJob(currentUser.user.username, job.id)}
-            showApplyButton={!job.applied}
+            applyToJob={handleApply}
+            isApplied={appliedJobs.has(job.id)}
           />
         ))}
       </div>

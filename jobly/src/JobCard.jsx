@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useCallback} from "react";
 
 import "./JobCard.css";
 
@@ -16,13 +16,12 @@ import "./JobCard.css";
  *
  * JobCardList -> JobCard
  */
-function JobCard({title, salary, equity, companyHandle, applyToJob, showApplyButton}) {
-
+function JobCard({id, title, salary, equity, companyHandle, applyToJob, isApplied}) {
   return (
     <div className="JobCard">
-        {showApplyButton &&
-        <button className="JobCard-button" onClick={applyToJob}>Apply</button>}
-
+        {!isApplied
+        ? <button className="JobCard-button" onClick={() => applyToJob(id)}>Apply</button>
+        : <button className="JobCard-button-disabled" disabled>Applied</button>}
       <div className="JobCard-title">
         <h6>{title}</h6>
         <p>{companyHandle}</p>

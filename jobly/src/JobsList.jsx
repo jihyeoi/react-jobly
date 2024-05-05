@@ -4,6 +4,8 @@ import JobCardList from "./JobCardList";
 import SearchForm from "./SearchForm";
 import usePagination from "./usePagination";
 import PaginationControls from "./PaginationControl";
+import {useContext} from "react";
+import userContext from "./userContext";
 
 import "./JobsList.css";
 
@@ -22,8 +24,12 @@ function JobsList() {
     jobs: [],
   });
   const [searchedJob, setSearchJob] = useState("");
+  const [appliedJobs, setAppliedJobs] = useState(new Set());
   const [error, setError] = useState(null);
   const {currentData, next, prev, reset, currentPage, maxPage} = usePagination(jobs.jobs, 20)
+  const {currentUser} = useContext(userContext);
+
+
 
   useEffect(function fetchAllJobs() {
     async function fetchJobs() {
@@ -33,6 +39,10 @@ function JobsList() {
         isLoading: false,
         jobs: response,
       });
+    }
+    const storedJobs = JSON.parse(localStorage.getItem('appliedJobs'))
+    if (storedJobs) {
+      setAppliedJobs(new Set(storedJobs));
     }
     fetchJobs();
   }, []);
@@ -44,27 +54,37 @@ function JobsList() {
   /** search through all jobs by partial or full job name */
   async function searchJobs(jobName) {
     const name = jobName.trim();
+    try {
+      const response = await JoblyApi.getJobs(name);
+      setSearchJob(name);
 
-    const response = await JoblyApi.getJobs(name);
+      setJobs({
+        jobs: response,
+        isLoading: false,
+      });
+    } catch (err) {
+      setError(err)
+    }
 
-    setSearchJob(name);
-
-    setJobs({
-      jobs: response,
-      isLoading: false,
-    });
   }
 
   /** apply to job */
-  async function applyToJob({username, jobId}) {
+  async function applyToJob(username, jobId) {
     try {
-      const response = await JoblyApi.applyToJob({
+      const response = await JoblyApi.apply({
         username,
         jobId
       });
-      if (response.ok) {
-        setJobs(jobs.jobs.map(job => job.id === jobId ? {...job, applied:true}: job))
-      }
+      setJobs(current => ({
+        ... current,
+        jobs: current.jobs.map(job => job.id === jobId ? {...job, isApplied:true} : job)
+      }))
+      setAppliedJobs(jobs => {
+        const updatedJobs = new Set(jobs);
+        updatedJobs.add(jobId);
+        localStorage.setItem('appliedJobs', JSON.stringify([...updatedJobs]));
+        return updatedJobs
+      })
     } catch (err) {
       setError(err)
     }
@@ -89,7 +109,7 @@ function JobsList() {
         </div>
         {jobs.jobs.length > 0
           ? <div className="JobsList-jobs">
-              <JobCardList jobs={currentData} applyToJob={applyToJob}/>
+              <JobCardList jobs={currentData} applyToJob={applyToJob} appliedJobs={appliedJobs} />
               <PaginationControls next={next} prev={prev} currentPage={currentPage} maxPage={maxPage} />
             </div>
           : <div className="JobsList-message">
