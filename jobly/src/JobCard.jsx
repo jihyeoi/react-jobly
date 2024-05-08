@@ -1,4 +1,6 @@
 import React, {useCallback} from "react";
+import {useContext} from "react";
+import userContext from "./userContext";
 
 import "./JobCard.css";
 
@@ -17,6 +19,12 @@ import "./JobCard.css";
  * JobCardList -> JobCard
  */
 function JobCard({id, title, salary, equity, companyHandle, applyToJob, isApplied}) {
+  console.log("applyToJob from JobCard", typeof applyToJob)
+
+  const {currentUser} = useContext(userContext);
+
+  console.log("id", id, "isApplied", isApplied)
+
   return (
     <div className="JobCard">
         {!isApplied

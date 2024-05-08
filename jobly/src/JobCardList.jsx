@@ -1,7 +1,5 @@
 import React from "react";
 
-import {v4 as uuid} from "uuid";
-
 import JobCard from "./JobCard";
 import {useContext} from "react";
 import userContext from "./userContext";
@@ -20,8 +18,12 @@ import "./JobCardList.css";
  * JobList -> JobCardList -> JobCard
  */
 function JobCardList({jobs, applyToJob, appliedJobs}) {
-
   const {currentUser} = useContext(userContext);
+
+    console.log("applyToJob from JobCard", typeof applyToJob)
+
+
+  console.log("appliedJobs in JobCardList", appliedJobs)
 
   function handleApply(jobId) {
     if (currentUser && currentUser.user) {
@@ -43,7 +45,7 @@ function JobCardList({jobs, applyToJob, appliedJobs}) {
             equity={job.equity}
             companyHandle={job.companyHandle}
             applyToJob={handleApply}
-            isApplied={appliedJobs.has(job.id)}
+            isApplied={appliedJobs ? appliedJobs.has(job.id) : false}
           />
         ))}
       </div>
