@@ -1,5 +1,4 @@
-import React, {useCallback} from "react";
-import {useContext} from "react";
+import React, {useContext, useState} from "react";
 import userContext from "./userContext";
 
 import "./JobCard.css";
@@ -18,25 +17,41 @@ import "./JobCard.css";
  *
  * JobCardList -> JobCard
  */
-function JobCard({id, title, salary, equity, companyHandle, applyToJob, isApplied}) {
-  console.log("applyToJob from JobCard", typeof applyToJob)
+function JobCard({id, title, salary, equity, companyHandle}) {
+  const { hasAppliedToJob, applyToJob } = useContext(userContext);
+  const [applied, setApplied] = useState();
 
-  const {currentUser} = useContext(userContext);
+  React.useEffect(
+    function updateAppliedStatus() {
+      console.debug("JobCard useEffect updateAppliedStatus", "id=", id);
 
-  console.log("id", id, "isApplied", isApplied)
+      setApplied(hasAppliedToJob(id));
+    },
+    [id, hasAppliedToJob]
+  );
+
+  async function handleApply(evt) {
+    if (hasAppliedToJob(id)) return;
+    applyToJob(id);
+    setApplied(true);
+  }
 
   return (
     <div className="JobCard">
-        {!isApplied
-        ? <button className="JobCard-button" onClick={() => applyToJob(id)}>Apply</button>
-        : <button className="JobCard-button-disabled" disabled>Applied</button>}
-      <div className="JobCard-title">
+        <button
+          className="JobCard-button"
+          onClick={handleApply}
+          disabled={applied}
+        >
+          {applied ? "Applied" : "Apply"}
+        </button>
+        <div className="JobCard-title">
         <h6>{title}</h6>
         <p>{companyHandle}</p>
       </div>
 
       <div className="JobCard-description">
-        <p>Salary: {salary}</p>
+        <p>Salary: {"$" + Intl.NumberFormat("en-US").format(salary)}</p>
         <p>Equity: {equity}</p>
       </div>
     </div>

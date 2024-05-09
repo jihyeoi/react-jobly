@@ -6,8 +6,7 @@ import CompanyDetails from "./CompanyDetails";
 import SingupForm from "./SignupForm";
 import LoginForm from "./LoginForm";
 import ProfileForm from "./ProfileForm";
-import {useContext} from "react";
-import userContext from "./userContext";
+import AppliedJobs from "./AppliedJobs";
 
 /**
  * Routes list
@@ -18,8 +17,7 @@ import userContext from "./userContext";
  *
  * App -> RoutesList -> CompanyDeatail, JobList, CompanyList, Homepage
  */
-function RoutesList({register, login, update}) {
-  const {currentUser} = useContext(userContext);
+function RoutesList({register, login, update, currentUser}) {
 
   function renderForLoggedUsers() {
     return (
@@ -28,6 +26,7 @@ function RoutesList({register, login, update}) {
         <Route element={<JobsList />} path="/jobs" />
         <Route element={<CompanyDetails />} path="/companies/:name" />
         <Route element={<ProfileForm update={update}/>} path="/profile" />
+        <Route element={<AppliedJobs />} path="/myjobs" />
       </>
     );
   }
@@ -46,7 +45,7 @@ function RoutesList({register, login, update}) {
       <Routes>
         <Route element={<HomePage />} path="/" />
 
-        {!currentUser.user ? renderForNonLoggedUsers() : renderForLoggedUsers()}
+        {!currentUser ? renderForNonLoggedUsers() : renderForLoggedUsers()}
 
         {/* if use is trying to go somewhere they shouldn't be */}
         <Route element={<Navigate to="/" />} path="*" />

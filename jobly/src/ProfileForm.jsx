@@ -46,7 +46,7 @@ function ProfileForm({update}) {
   }
   return (
     <div className="ProfileForm">
-      <h3>Edit Profile</h3>
+      <h1>Edit Profile</h1>
       {errors.length > 0
         ? errors.map((err) => (
             <div className="alert alert-danger" role="alert" key={err}>

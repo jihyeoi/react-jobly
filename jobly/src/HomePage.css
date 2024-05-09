@@ -2,3 +2,31 @@
   text-align: center;
   margin-top: 50px;
 }
+
+.HomePage-img {
+  padding-top: 15px;
+  width: 150px;
+  height: auto;
+
+  /* Slow fade animation */
+  animation: slowFade 5s infinite;
+}
+
+@keyframes slowFade {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;  /* Vary opacity to simulate slowing */
+  }
+}
+
+.HomePage-title {
+  font-family: Georgia, serif;
+  font-weight: 800;
+  font-size: 4em;
+}
+
+.HomePage-welcome {
+  font-family: Georgia, serif;
+}

@@ -18,17 +18,21 @@ function HomePage() {
   const {currentUser} = useContext(userContext);
   return (
     <div className="HomePage">
-      <h1>Jobly</h1>
-      {!currentUser.user ? (
-        "All the jobs in one, convenient place."
-      ) : (
-        <h2>
-          Welcome{" "}
+      <h1 class="HomePage-title">Jobly</h1>
+      {!currentUser.user
+      ? "All the jobs in one, convenient place."
+      : <div class="HomePage-welcome">
+          <p>______________</p>
+          Welcome, {" "}
           <i>
             {currentUser.user.firstName} {currentUser.user.lastName}!
           </i>
-        </h2>
-      )}
+          <div>
+            <img class="HomePage-img" src="https://i.gifer.com/49A6.gif"/>
+          </div>
+          <p>______________</p>
+        </div>
+      }
     </div>
   );
 }

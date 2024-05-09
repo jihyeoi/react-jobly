@@ -109,16 +109,28 @@ class JoblyApi {
 
   /** lets user apply to companies */
 
-  static async apply({username, jobId}) {
+  static async apply(username, jobId) {
+    console.log("username from jobly api", username, "id: ", jobId)
     let res = await this.request(
       `users/${username}/jobs/${jobId}`,
       { username, jobId },
       "POST"
     )
-    console.log("res", res)
     return res
   }
 
+  /** gets job info from an array of job ids */
+
+  static async getAppliedJobs(ids) {
+    console.log("ids from jobly", ids)
+    let res = await this.request(
+      `jobs/batch`,
+      {ids},
+      "POST"
+    )
+    console.log("res", res)
+    return res
+  }
 
 }
 
