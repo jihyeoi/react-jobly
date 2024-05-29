@@ -22,7 +22,7 @@ Jobly is a full-stack job application portal built with React on the frontend an
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/jobly.git
+   git clone https://github.com/jihyeoi/jobly.git
    cd jobly
    ```
 2. **Install dependencies**
