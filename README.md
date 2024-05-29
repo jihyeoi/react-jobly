@@ -18,7 +18,7 @@ Jobly is a full-stack job application portal built with React on the frontend an
 - **Styling**: CSS with support for mobile and desktop views
 
 # Installation
-**Note**: Backend must be installed for the front end to work, as front end uses API calls to the back end to generate data. Instructions for backend installation is [here](https://github.com/jihyeoi/express-jobly-backend). 
+**Note**: Backend must be installed for the front end to work, as front end uses API calls to the back end to generate data. Instructions for backend installation are [here](https://github.com/jihyeoi/express-jobly-backend). 
 
 1. **Clone the repository**
    ```bash
