@@ -8,7 +8,8 @@
     "build": "vite build",
     "test": "vitest",
     "test:cov": "vitest --coverage",
-    "test:debug": "vitest --run --inspect-brk --no-file-parallelism"
+    "test:debug": "vitest --run --inspect-brk --no-file-parallelism",
+    "open": "cd jobly && react-scripts start"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.4.1",
