@@ -1,44 +1,44 @@
-# Jobly
-Jobly is a full-stack job application portal built with React on the frontend and a Node.js/Express backend. The app allows users to browse job listings, apply for jobs, and manage their profiles.
+# React JS Starter
 
-## Features
+Run `npm install` and then `npm run ...`:
 
-- **User Authentication**: Secure login, registration, and logout functionality.
-- **Company Listings**: Users can view a list of companies / search for a specific company, and click into them for company-specific jobs.
-- **Job Listings**: Users can view a list of jobs and search for specific jobs.
-- **Job Applications**: Authenticated users can apply for jobs.
-- **My Jobs**: Authenticated users can view the jobs they've applied to.
-- **User Profile**: Users can view and update their profile information.
+| Command     | Description          |
+|-------------|----------------------|
+| start       | Start                |
+|  build      | Build to dist dir    |
+| test        | Run tests            |
+| test:cov    | Run tests w/coverage |
+| test:debug  | Run tests w/debugger |
 
-## Technologies Used
-- **Frontend**: React, React Router
-- **Backend**: Node.js, Express
-- **Database**: PostgreSQL
-- **Authentication**: JWT for secure token-based authentication
-- **Styling**: CSS with support for mobile and desktop views
 
-# Installation
-**Note**: Backend must be installed for the front end to work, as front end uses API calls to the back end to generate data. Instructions for backend installation are [here](https://github.com/jihyeoi/express-jobly-backend). 
+### Folder Structure
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/jihyeoi/jobly.git
-   cd jobly
-   ```
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
-3. **Start server**
-   ```bash
-   npm start
-   ```
-   This command will start the frontend on `localhost:3000` and should automatically open a browser window with the app.
+No configuration or complicated folder structures, just the files you need to build your app:
 
-## Usage
+```
+vite-template-react
+├── node_modules
+├── public
+│   ├── favicon.svg
+└── src
+    ├── App.css
+    ├── App.jsx
+    ├── App.test.jsx
+    ├── index.css
+    ├── index.jsx
+    └── logo.svg
+    └── setupTests.js
+├── .gitignore
+├── index.html
+├── package.json
+├── vite.config.js
+```
 
-After installing, you can register as a new user or log in with existing credentials. Once logged in, you can view job listings, apply for jobs, and update your profile.
+## Credits
 
-Project Link: [https://github.com/jihyeoi/react-jobly](https://github.com/jihyeoi/react-jobly)
+Customizations by Joel Burton (joel@rithmschool.com), based on the
+Vite Template React, which is built and maintained by [Safdar Jamal](https://safdarjamal.github.io).
 
-   
+## License
+
+This project is licensed under the terms of the [MIT license](https://github.com/SafdarJamal/vite-template-react/blob/main/LICENSE).
